@@ -4,44 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
     <title>Area Cliente</title>
 </head>
 
 <body>
     <header>
-        <img src="" alt="Logo Empresa">
+        <h2>
+            <img src="img/logo.png" alt="Logo Empresa" id="logo-empresa">
+            <p id="h2-right"> Área do Cliente </p>
+        </h2>
     </header>
     <main>
         <form action="index.html" method="post">
-            <thead>
-                <tr>
-                    <td id="td-sub">
-                        <h3>
-                            Área do Cliente
-                        </h3>
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Login</h3>
-                    </td>
-                    <td>
-                        <input type="text" name="nome" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Senha</h3>
-                    </td>
-                    <td>
+            <table>
+                <thead>
+                    <tr>
+                        <td id="td-sub">
+                            <h3>
+                                Login
+                            </h3>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h3>Usuário</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="nome" required maxlength="20" />
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h3>Senha</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                         <input type="password" name="senha" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </form>
     </main>
     <footer>
