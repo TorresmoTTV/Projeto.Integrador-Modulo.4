@@ -4,6 +4,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="../styles/style.css">
     <title>Gerenciar Ordens de Serviço</title>
 </head>
+
+<body>
+    <header>
+        <h2>
+            <img src="../img/logo.png" alt="Logo Empresa" id="logo-empresa">
+            <p id="h2-right">Gerenciar</p>
+            <p id="h2-right">Ordens de Serviço</p>
+        </h2>
+    </header>
+    <form action="gerenicar-pos.html" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Condição</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="condicao" required maxlength="20" />
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Descrição</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="descricao" required maxlength="20" />
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Link Unboxing</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="linkunboxing" required maxlength="20" />
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Data de Criação</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="datadecriacao" required maxlength="20" />
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Data de Finalização</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="datadefinalizacao" required maxlength="20" />
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Cliente</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="integer" name="cliente" required maxlength="20" />
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Técnico</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="integer" name="tecnico" required maxlength="20" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</body>
+
+<footer>
+</footer>
+
+</html>
