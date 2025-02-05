@@ -40,6 +40,14 @@ header {
     gap: 20px;
 }
 
+#form-container-login {
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: auto;
+    gap: 20px;
+}
+
 .form-column {
     width: 48%;
 }

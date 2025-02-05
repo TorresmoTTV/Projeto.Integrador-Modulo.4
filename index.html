@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/stylecriarcli.css">
     <title>Área de Login</title>
 </head>
 
@@ -17,32 +17,18 @@
     </header>
     <main>
         <form action="index.html" method="post">
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Usuário</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="nome" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Senha</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="password" name="senha" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div id="form-container-login">
+                <div class="form-column">
+                    <div class="form-group">
+                        <label>Usuário</label>
+                        <input type="text" name="usuario" required maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" name="senha" required maxlength="20">
+                    </div>
+                </div>
+            </div>
             <div id="div-center">
                 <button type="submit" onclick="entrar()">Entrar</button>
             </div>
@@ -65,6 +51,7 @@
             Localização: Rua dos Tolos, 0, 00000-000, São Paulo.
         </p>
     </footer>
+    <script src="../scripts/script.js"></script>
 </body>
 
 </html>
