@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/stylecriarcli.css">
     <title>Criar Conta</title>
 </head>
-
 <body>
     <header>
         <h2>
@@ -15,115 +13,57 @@
             <p id="h2-right"> Criar Conta </p>
         </h2>
     </header>
+    
     <main>
+        <div id="div-center">
+            <h3>Todos os campos são obrigatórios.</h3>
+        </div>
         <form action="criar-cliente.html" method="post">
-            <table>
-                <thead>
-                    <tr>
-                        <td id="td-sub">
-                            <h3>
-                                Todos os campos são obrigatórios.
-                            </h3>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Nome</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="nome" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>E-mail</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="email" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>C.P.F</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="cpf" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Endereço</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="endereço" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Telefone</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="telefone" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Usuário</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="usuario" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Senha</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="password" name="senha" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <button type="submit" onclick="criarConta()">Criar Conta</button>
-            <button type="button" onclick="entrar()">Entrar</button>
-            <button type="button" onclick="areaFuncionario()">Área do Funcionário</button>
+            <div class="form-container">
+                <div class="form-column">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" name="nome" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" name="email" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label>C.P.F</label>
+                        <input type="text" name="cpf" required maxlength="14">
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço</label>
+                        <input type="text" name="endereco" required maxlength="100">
+                    </div>
+                </div>
+                <div class="form-column">
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" name="telefone" required maxlength="15">
+                    </div>
+                    <div class="form-group">
+                        <label>Usuário</label>
+                        <input type="text" name="usuario" required maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" name="senha" required maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button type="submit" onclick="criarConta()">Criar Conta</button>
+            </div>
         </form>
     </main>
     <footer id="footer-info">
         <p>
-            Contato: 4622-8922
-            <br>
+            Contato: 4622-8922 <br>
             Localização: Rua dos Tolos, 0, 00000-000, São Paulo.
         </p>
     </footer>
+    <script src="../scripts/script.js"></script>
 </body>
-
 </html>
