@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/stylecriarcli.css">
     <title>Criar Conta - Técnicos</title>
 </head>
 
@@ -17,105 +17,67 @@
     </header>
     <main>
         <form action="criar-tecnico.html" method="post">
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Nome</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="nome" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>E-mail</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="email" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>C.P.F</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="cpf" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Telefone</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="telefone" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Usuário</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="usuario" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h3>Senha</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="password" name="senha" required maxlength="20" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="form-container">
+                <div class="form-column">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" name="nome" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" name="email" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label>C.P.F</label>
+                        <input type="text" name="cpf" required maxlength="14">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" name="telefone" required maxlength="15">
+                    </div>
+                    <div class="form-group">
+                        <label>Usuário</label>
+                        <input type="text" name="usuario" required maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" name="senha" required maxlength="20">
+                    </div>
+                </div>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>
+                                    Id
+                                </td>
+                                <td>
+                                    Nome
+                                </td>
+                                <td>
+                                    E-mail
+                                </td>
+                                <td>
+                                    C.P.F
+                                </td>
+                                <td>
+                                    Telefone
+                                </td>
+                                <td>
+                                    Usuário
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="button-container">
+                <button type="submit" onclick="criarContaTec()">Criar</button>
+                <button type="submit" onclick="editarContaTec()">Editar Conta</button>
+                <button type="submit" onclick="cancelarContaTec()">Cancelar</button>
+                <button type="submit" onclick="criarConta()">Voltar para Administrador</button>
+            </div>
         </form>
-        <table>
-            <thead>
-                <tr>
-                    <td>
-                        Id
-                    </td>
-                    <td>
-                        Nome
-                    </td>
-                    <td>
-                        E-mail
-                    </td>
-                    <td>
-                        C.P.F
-                    </td>
-                    <td>
-                        Telefone
-                    </td>
-                    <td>
-                        Usuário
-                    </td>
-                </tr>
-            </thead>
-        </table>
     </main>
 </body>
 

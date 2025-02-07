@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/stylecriarcli.css">
     <title>Gerenciar Ordens de Serviço</title>
 </head>
 
@@ -16,93 +16,77 @@
             <p id="h2-right">Ordens de Serviço</p>
         </h2>
     </header>
-    <form action="gerenicar-pos.html" method="post">
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Condição</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" name="condicao" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Descrição</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" name="descricao" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Link Unboxing</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" name="linkunboxing" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Data de Criação</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" name="datadecriacao" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Data de Finalização</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" name="datadefinalizacao" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Cliente</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="integer" name="cliente" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>
-                        <h3>Técnico</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="integer" name="tecnico" required maxlength="20" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <form action="criar-tecnico.html" method="post">
+        <div class="form-container">
+            <div class="form-column">
+                <div class="form-group">
+                    <label>Condição</label>
+                    <input type="text" name="condição" required maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <input type="text" name="descrição" required maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label>Link Unboxing</label>
+                    <input type="text" name="link unboxing" required maxlength="14">
+                </div>
+                <div class="form-group">
+                    <label>Data de Criação</label>
+                    <input type="tel" name="telefone" required maxlength="15">
+                </div>
+                <div class="form-group">
+                    <label>Data de Finalização</label>
+                    <input type="text" name="usuario" required maxlength="30">
+                </div>
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <input type="password" name="senha" required maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>Técnico</label>
+                    <input type="password" name="senha" required maxlength="20">
+                </div>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>
+                                Id
+                            </td>
+                            <td>
+                                Condição
+                            </td>
+                            <td>
+                                Descrição
+                            </td>
+                            <td>
+                                Link Unboxing
+                            </td>
+                            <td>
+                                Data de Criação
+                            </td>
+                            <td>
+                                Data de Finalização
+                            </td>
+                            <td>
+                                Cliente
+                            </td>
+                            <td>
+                                Técnico
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="button-container">
+            <button type="submit" onclick="criarContaTec()">Criar</button>
+            <button type="submit" onclick="editarContaTec()">Editar Ordem</button>
+            <button type="submit" onclick="cancelarContaTec()">Cancelar</button>
+            <button type="submit" onclick="criarConta()">Voltar para Página Anterior</button>
+        </div>
     </form>
 </body>
 
