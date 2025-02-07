@@ -18,32 +18,34 @@
         </h2>
     </header>
     <main>
-        <form action="index.html" method="post">
-            <div id="form-container-login">
-                <div class="form-column">
-                    <div class="form-group">
-                        <label>Usuário</label>
-                        <input type="text" name="usuario" required maxlength="30">
-                    </div>
-                    <div class="form-group">
-                        <label>Senha</label>
-                        <input type="password" name="senha" required maxlength="20">
+        <div id="form-container-wrapper">
+            <form action="index.html" method="post">
+                <div id="form-container-login">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label>Usuário</label>
+                            <input type="text" name="usuario" required maxlength="30">
+                        </div>
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <input type="password" name="senha" required maxlength="20">
+                        </div>
                     </div>
                 </div>
+                <div id="div-center">
+                    <button type="submit" onclick="entrar()">Entrar</button>
+                </div>
+            </form>
+            <div id="div-center">
+                <a href="pages/criar-cliente.html">
+                    <button>Criar Conta</button>
+                </a>
             </div>
             <div id="div-center">
-                <button type="submit" onclick="entrar()">Entrar</button>
+                <a href="pages/area-funcionario.html">
+                    <button>Área dos Funcionários</button>
+                </a>
             </div>
-        </form>
-        <div id="div-center">
-            <a href="pages/criar-cliente.html">
-                <button>Criar Conta</button>
-            </a>
-        </div>
-        <div id="div-center">
-            <a href="pages/area-funcionario.html">
-                <button>Área dos Funcionários</button>
-            </a>
         </div>
     </main>
     <footer id="footer-info">
