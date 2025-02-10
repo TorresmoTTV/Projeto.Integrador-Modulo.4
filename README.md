@@ -14,8 +14,6 @@ Organizar a página de gerência dos técnicos.
 Criar tabelas infinitas para a área do administrador.
 
 Criar menu na área do Administrador:
-- Gerenciar Técnicos.
-- Gerenciar Ordens de Serviço.
 - Criar Relatórios: (submenu)
 . Ordens de Serviço;
 . Técnicos;
