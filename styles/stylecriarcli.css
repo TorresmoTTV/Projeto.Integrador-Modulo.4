@@ -64,15 +64,11 @@ h3 {
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 20px;
-}
-
-#form-container-login {
-    display: flex;
-    justify-content: space-between;
     max-width: 800px;
     margin: auto;
     gap: 20px;
+    padding: 20px;
+    padding-bottom: 0px;
 }
 
 .form-column {
@@ -101,6 +97,7 @@ input {
 .button-container {
     text-align: center;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 button {
@@ -123,7 +120,7 @@ button:hover {
     padding: 20px;
     text-align: center;
     box-sizing: border-box;
-    position: absolute;
+    position: bottom;
     bottom: 0;
     border-radius: 30px 30px 0px 0px;
 }
