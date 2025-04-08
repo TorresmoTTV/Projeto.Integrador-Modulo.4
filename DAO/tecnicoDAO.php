@@ -41,7 +41,7 @@ class TecnicoDAO
         return $conex->conn->query($sql);
     }
 
-    public function alterarTecnico(tecnicomodel $tecnico) {
+    public function alterarTecnico($idTecnico, $nome, $telefone, $email, $cpf, $usuarioTec, $senha) {
         include_once 'Conexao.php';
         $conex = new Conexao();
         $conex->fazConexao();

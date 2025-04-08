@@ -44,7 +44,7 @@ class ClienteDAO
         return $conex->conn->query($sql);
     }
 
-    public function alterarAluno(clientemodel $cliente)
+    public function alterarCliente(clientemodel $cliente)
     {
         include_once 'Conexao.php';
         $conex = new Conexao();
