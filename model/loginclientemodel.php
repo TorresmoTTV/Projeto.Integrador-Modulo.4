@@ -1,6 +1,6 @@
 <?php
 
-class logincliente
+class loginclientemodel
 {
     private static $instancia = null;
     private $idCliente;
@@ -13,7 +13,7 @@ class logincliente
     public static function getInstancia()
     {
         if (self::$instancia === null) {
-            self::$instancia = new logincliente();
+            self::$instancia = new loginclientemodel();
         }
         return self::$instancia;
     }
