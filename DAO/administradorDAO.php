@@ -69,6 +69,32 @@ class AdministradorDAO
         }
         echo "<script>location.href='../controller/processaAdministrador.php?op=Listar';</script>";
     }
+
+    public function buscarAdministradorPorLoginSenha($login, $senha)
+    {
+        include_once 'Conexao.php';
+        include_once '../model/administradormodel.php';
+        
+        $conex = new Conexao();
+        $conex->fazConexao();
+        $administrador = null;
+
+        $sql = "SELECT * FROM Administrador WHERE UsuarioAdmin = ? AND Senha = ?";
+        $stmt = $conex->conn->prepare($sql);
+        $stmt->bindValue(1, $login);
+        $stmt->bindValue(2, $senha);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch()) {
+            $administrador = new AdministradorModel();
+            $administrador->setIDAdmin($row['IDAdmin']);
+            $administrador->setUsuarioAdmin($row['UsuarioAdmin']);
+            echo "<script>console.log('Administrador encontrado: " . $row['IDAdmin'] . "');</script>";
+        } else {
+            echo "<script>console.log('Administrador não encontrado.');</script>";
+        }
+        return $administrador;
+    }
 }
 
 ?>

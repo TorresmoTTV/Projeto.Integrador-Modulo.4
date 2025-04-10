@@ -77,6 +77,31 @@ class TecnicoDAO
         echo "<script>location.href='../controller/processaTecnico.php?op=Listar';</script>";
     }
 
+    public function buscarTecnicoPorLoginSenha($login, $senha)
+    {
+        include_once 'Conexao.php';
+        include_once '../model/tecnicomodel.php';
+        
+        $conex = new Conexao();
+        $conex->fazConexao();
+        $tecnico = null;
+
+        $sql = "SELECT * FROM Tecnico WHERE UsuarioTec = ? AND Senha = ?";
+        $stmt = $conex->conn->prepare($sql);
+        $stmt->bindValue(1, $login);
+        $stmt->bindValue(2, $senha);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch()) {
+            $tecnico = new TecnicoModel();
+            $tecnico->setIDTecnico($row['IDTecnico']);
+            $tecnico->setNome($row['Nome']);
+            echo "<script>console.log('Técnico encontrado: " . $row['Nome'] . "');</script>";
+        } else {
+            echo "<script>console.log('Técnico não encontrado.');</script>";
+        }
+        return $tecnico;
+    }
 }
 
 ?>
