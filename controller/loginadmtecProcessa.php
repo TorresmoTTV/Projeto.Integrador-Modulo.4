@@ -18,4 +18,12 @@ function entrarFuncionario($login, $senha) {
     return null; // Se não for encontrado, retorna null
 }
 
+function sairTecAd()
+{
+    session_start();
+    session_unset();
+    session_destroy();
+    header('Location: view/area-funcionario.php');
+    exit();
+}
 ?>

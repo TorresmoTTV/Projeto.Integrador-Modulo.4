@@ -1,3 +1,26 @@
+<?php
+session_start();
+require 'DAO/conexao.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $stmt = $pdo->prepare("SELECT * FROM cliente WHERE UsuarioCliente = ?");
+    $stmt->execute([$username]);
+    $user = $stmt->fetch();
+
+    if ($user && password_verify($password, $user['senha'])) {
+        $_SESSION['user_id'] = $user['IDUsuario'];
+        $_SESSION['usuario'] = $user['UsuarioCliente'];
+        header('Location: view/page-cliente.php');
+        exit();
+    } else {
+        $error = 'Nome de usuário ou senha inválidos';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -19,7 +42,7 @@
     </header>
     <main>
         <div id="form-container-wrapper">
-            <form action="index.html" method="post">
+            <form action="index.php" method="POST">
                 <div id="form-container-login">
                     <div class="form-column">
                         <div class="form-group">
@@ -37,12 +60,12 @@
                 </div>
             </form>
             <div id="div-center">
-                <a href="view/criar-cliente.html">
+                <a href="view/criar-cliente.php">
                     <button>Criar Conta</button>
                 </a>
             </div>
             <div id="div-center">
-                <a href="view/area-funcionario.html">
+                <a href="view/area-funcionario.php">
                     <button>Área dos Funcionários</button>
                 </a>
             </div>

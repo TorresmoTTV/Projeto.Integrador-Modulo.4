@@ -18,7 +18,7 @@
         </h2>
     </header>
     <main>
-        <form action="area-funcionario.html" method="post">
+        <form action="area-funcionario.html" method="POST">
             <div id="form-container-login">
                 <div class="form-column">
                     <div class="form-group">
@@ -36,7 +36,7 @@
             </div>
         </form>
         <div id="div-center">
-            <a href="../index.html">
+            <a href="../index.php">
                 <button>Área Cliente</button>
             </a>
         </div>

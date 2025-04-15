@@ -1,3 +1,14 @@
+<?php
+session_start();
+require '../DAO/conexao.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: area-funcionario.php');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -14,8 +25,8 @@
         <div class="menu">
             <button class="dropbtn" onclick="toggleDropdown()">☰</button>
             <div id="myDropdown" class="dropdown-content">
-                <a href="criar-tecnico.html">Gerenciar Técnicos</a>
-                <a href="gerenicar-pos.html">Gerenciar Ordens de Serviço</a>
+                <a href="criar-tecnico.php">Gerenciar Técnicos</a>
+                <a href="gerenicar-os.php">Gerenciar Ordens de Serviço</a>
                 <a href="#">Criar Relatórios</a>
             </div>
         </div>
@@ -24,7 +35,7 @@
             <p> Administração </p>
         </h2>
         <div>
-            <a href="../index.html"><button id="button-sair">Sair</button></a>
+            <button id="button-sair" onclick="sairTecAd()">Sair</button>
         </div>
     </header>
     <main>

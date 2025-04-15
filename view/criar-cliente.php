@@ -1,3 +1,31 @@
+<?php
+session_start();
+require '../DAO/conexao.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $endereco = $_POST['endereco'];
+    $cpf = $_POST['cpf'];
+    $telefone = $_POST['telefone'];
+    $username = $_POST['usuario'];
+    $password = $_POST['senha'];
+
+    $stmt = $pdo->prepare("SELECT * FROM cliente WHERE UsuarioCliente = ?");
+    $stmt->execute([$username]);
+    if ($stmt->fetch()) {
+        $error = 'Nome do usuário já existe.';
+    } else {
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $stmt = $pdo->prepare('INSERT INTO cliente (Nome, Email, Endereco, CPF, Telefone, UsuarioCliente, Senha) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        if ($stmt->execute([$nome, $email, $endereco, $cpf, $telefone, $username, $hashed_password])) {
+            $sucess = 'Usuário registrado com sucesso. Você pode fazer login agora.';
+        } else {
+            $error = "Erro ao registrar usuário. Tente novamente.";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,7 +50,7 @@
         <div id="div-center">
             <h3>Todos os campos são obrigatórios.</h3>
         </div>
-        <form action="criar-cliente.html" method="post">
+        <form action="criar-cliente.php" method="POST">
             <div class="form-container">
                 <div class="form-column">
                     <div class="form-group">

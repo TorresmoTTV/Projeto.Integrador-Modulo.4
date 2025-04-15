@@ -1,3 +1,14 @@
+<?php
+session_start();
+require '../DAO/conexao.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../index.html');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -17,9 +28,9 @@
             <p id="h2-center">Seus Pedidos</p>
         </h2>
         <div id="div-center">
-            <a href="../index.html">
-                <button id="button-sair-cli">Sair</button></a>
-            <a href="editar-cliente.html">
+            <a href="../index.php">
+                <button id="button-sair-cli" onclick="sairCliente()">Sair</button></a>
+            <a href="editar-cliente.php">
                 <button id="button-head">Editar Conta</button></a>
         </div>
     </header>

@@ -1,3 +1,14 @@
+<?php
+session_start();
+require '../DAO/conexao.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: area-funcionario.php');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -11,15 +22,14 @@
 <body>
     <header>
         <div>
-            <a href="gerenicar-pos.html">
+            <a href="gerenicar-os.php">
                 <button id="button-head">Criar/Editar</button></a>
         </div>
         <h2 id="h2-center">
             Ordens de Serviço
         </h2>
         <div>
-            <a href="../index.html">
-                <button id="button-sair">Sair</button></a>
+                <button id="button-sair" onclick="sairTecAd()">Sair</button>
         </div>
     </header>
     <main>

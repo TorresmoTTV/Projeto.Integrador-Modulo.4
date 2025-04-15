@@ -1,3 +1,14 @@
+<?php
+session_start();
+require '../DAO/conexao.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: area-funcionario.php');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -18,7 +29,7 @@
             <p id="h2-right">Ordens de Serviço</p>
         </h2>
     </header>
-    <form action="criar-tecnico.html" method="post">
+    <form action="gerenciar-os.php" method="POST">
         <div class="form-container">
             <div class="form-column">
                 <div class="form-group">
