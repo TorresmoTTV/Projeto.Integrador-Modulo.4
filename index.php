@@ -10,14 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
-    if ($user && password_verify($password, $user['senha'])) {
-        $_SESSION['user_id'] = $user['IDUsuario'];
-        $_SESSION['usuario'] = $user['UsuarioCliente'];
+    if ($user && password_verify($password, $user['Senha'])) {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
         header('Location: view/page-cliente.php');
         exit();
     } else {
         $error = 'Nome de usuário ou senha inválidos';
-    }
+    }//erro fim
 }
 ?>
 
@@ -41,22 +41,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </h2>
     </header>
     <main>
+        <?php if (isset($error)): ?>
+            <p style="color:red;"><?php echo $error; ?></p>
+        <?php endif; ?>
         <div id="form-container-wrapper">
             <form action="index.php" method="POST">
                 <div id="form-container-login">
                     <div class="form-column">
                         <div class="form-group">
                             <label>Usuário</label>
-                            <input type="text" name="usuario" required maxlength="30">
+                            <input type="text" name="username" required maxlength="30">
                         </div>
                         <div class="form-group">
                             <label>Senha</label>
-                            <input type="password" name="senha" required maxlength="20">
+                            <input type="password" name="password" required maxlength="20">
                         </div>
                     </div>
                 </div>
                 <div id="div-center">
-                    <button type="submit" onclick="entrarCliente()">Entrar</button>
+                    <button type="submit">Entrar</button>
                 </div>
             </form>
             <div id="div-center">
