@@ -1,24 +1,6 @@
 <?php
 session_start();
-require 'DAO/conexao.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $stmt = $pdo->prepare("SELECT * FROM cliente WHERE UsuarioCliente = ?");
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
-
-    if ($user && password_verify($password, $user['Senha'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        header('Location: view/page-cliente.php');
-        exit();
-    } else {
-        $error = 'Nome de usuário ou senha inválidos';
-    }//erro fim
-}
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </h2>
     </header>
     <main>
+        <?php
+        require 'controller/clienteProcessa.php';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            entrarCliente();
+        }
+        ?>
         <?php if (isset($error)): ?>
             <p style="color:red;"><?php echo $error; ?></p>
         <?php endif; ?>
@@ -73,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </a>
             </div>
         </div>
+        <br><br><br><br><br><br>
     </main>
     <footer id="footer-info">
         <p>

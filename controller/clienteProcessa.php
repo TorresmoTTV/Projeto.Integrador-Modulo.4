@@ -39,7 +39,8 @@ function atualizarConta()
 }
 function entrarCliente()
 {
-    require '../DAO/conexao.php';
+    require 'DAO/conexao.php';
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -48,14 +49,14 @@ function entrarCliente()
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
+        if ($user && password_verify($password, $user['Senha'])) {
+            $_SESSION['user_id'] = $user['IDUsuario'];
+            $_SESSION['username'] = $user['UsuarioCliente'];
             header('Location: view/page-cliente.php');
             exit();
         } else {
             $error = 'Nome de usuário ou senha inválidos';
-        }
+        }//erro fim
     }
 }
 

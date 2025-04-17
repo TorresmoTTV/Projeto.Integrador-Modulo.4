@@ -2,20 +2,27 @@
 require_once '../DAO/administradorDAO.php';
 require_once '../DAO/tecnicoDAO.php';
 
-function entrarFuncionario($login, $senha) {
-    $aDAO = new AdministradorDAO();
-    $admin = $aDAO->buscarAdministradorPorLoginSenha($login, $senha);
-    if ($admin != null) {
-        return $admin; // Retorna o administrador se encontrado
-    }
+function entrarFuncionario()
+{
+    require 'DAO/conexao.php';
 
-    $tDAO = new TecnicoDAO();
-    $tecnico = $tDAO->buscarTecnicoPorLoginSenha($login, $senha);
-    if ($tecnico != null) {
-        return $tecnico; // Retorna o técnico se encontrado
-    }
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-    return null; // Se não for encontrado, retorna null
+        $stmt = $pdo->prepare("SELECT * FROM tecnico WHERE UsuarioTec = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['Senha'])) {
+            $_SESSION['user_id'] = $user['IDTecnico'];
+            $_SESSION['username'] = $user['UsuarioTec'];
+            header('Location: view/page-cliente.php');
+            exit();
+        } else {
+            $error = 'Nome de usuário ou senha inválidos';
+        }
+    }
 }
 
 function sairTecAd()

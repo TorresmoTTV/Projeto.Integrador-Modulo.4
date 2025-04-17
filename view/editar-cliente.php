@@ -71,7 +71,7 @@ if (!isset($_SESSION['user_id'])) {
         </form>
         <div>
             <div id="div-center">
-                <a href="page-cliente.html">
+                <a href="page-cliente.php">
                     <button>Voltar para Pedidos</button></a>
             </div>
         </div>

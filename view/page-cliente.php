@@ -3,10 +3,9 @@ session_start();
 require '../DAO/conexao.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../index.html');
+    header('Location: ../index.php');
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -28,10 +27,16 @@ if (!isset($_SESSION['user_id'])) {
             <p id="h2-center">Seus Pedidos</p>
         </h2>
         <div id="div-center">
-            <a href="../index.php">
-                <button id="button-sair-cli" onclick="sairCliente()">Sair</button></a>
+            <button type="submit" id="button-sair-cli" <?php
+            require '../controller/clienteProcessa.php';
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                sairCliente();
+            }
+            ?>>Sair</button>
+            </form>
             <a href="editar-cliente.php">
-                <button id="button-head">Editar Conta</button></a>
+                <button id="button-head">Editar Conta</button>
+            </a>
         </div>
     </header>
     <main>
