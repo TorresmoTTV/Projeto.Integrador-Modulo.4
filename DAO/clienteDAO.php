@@ -4,7 +4,7 @@ class ClienteDAO
 
     public function cadastrarCliente(clientemodel $cliente)
     {
-        include_once 'Conexao.php';
+        include_once __DIR__ . '/conexao.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "INSERT INTO Cliente (Nome, Email, Endereco, CPF, Telefone, UsuarioCliente, Senha)

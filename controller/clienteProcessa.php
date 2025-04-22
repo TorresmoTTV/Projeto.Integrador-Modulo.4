@@ -21,6 +21,7 @@ function criarConta()
             $stmt = $pdo->prepare('INSERT INTO cliente (Nome, Email, Endereco, CPF, Telefone, UsuarioCliente, Senha) VALUES (?, ?, ?, ?, ?, ?, ?)');
             if ($stmt->execute([$nome, $email, $endereco, $cpf, $telefone, $username, $hashed_password])) {
                 $sucess = 'Usuário registrado com sucesso. Você pode fazer login agora.';
+                header('Location: ../index.php');
             } else {
                 $error = "Erro ao registrar usuário. Tente novamente.";
             }
@@ -37,6 +38,7 @@ function atualizarConta()
 {
 
 }
+
 function entrarCliente()
 {
     require 'DAO/conexao.php';
@@ -65,7 +67,7 @@ function sairCliente()
     session_start();
     session_unset();
     session_destroy();
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit();
 }
 ?>

@@ -29,37 +29,45 @@ if (!isset($_SESSION['user_id'])) {
             Ordens de Serviço
         </h2>
         <div>
-                <button id="button-sair" onclick="sairTecAd()">Sair</button>
+            <?php
+            require '../controller/loginadmtecProcessa.php';
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
+                sairTecAd();
+            }
+            ?>
+            <form method="POST" style="display:inline;">
+                <button type="submit" name="logout" id="button-sair">Sair</button>
+            </form>
         </div>
     </header>
     <main>
         <div id="div-center">
-        <table>
-            <tr>
-                Número
-            </tr>
-            <tr>
-                Condição
-            </tr>
-            <tr>
-                Descrição
-            </tr>
-            <tr>
-                Data de Criação
-            </tr>
-            <tr>
-                Data de Finalização
-            </tr>
-            <tr>
-                Link Unboxing
-            </tr>
-            <tr>
-                Cliente
-            </tr>
-            <tr>
-                Técnico
-            </tr>
-        </table>
+            <table>
+                <tr>
+                    Número
+                </tr>
+                <tr>
+                    Condição
+                </tr>
+                <tr>
+                    Descrição
+                </tr>
+                <tr>
+                    Data de Criação
+                </tr>
+                <tr>
+                    Data de Finalização
+                </tr>
+                <tr>
+                    Link Unboxing
+                </tr>
+                <tr>
+                    Cliente
+                </tr>
+                <tr>
+                    Técnico
+                </tr>
+            </table>
         </div>
     </main>
 </body>

@@ -27,12 +27,14 @@ if (!isset($_SESSION['user_id'])) {
             <p id="h2-center">Seus Pedidos</p>
         </h2>
         <div id="div-center">
-            <button type="submit" id="button-sair-cli" <?php
+            <?php
             require '../controller/clienteProcessa.php';
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
                 sairCliente();
             }
-            ?>>Sair</button>
+            ?>
+            <form method="POST" style="display:inline;">
+                <button type="submit" name="logout" id="button-sair-cli">Sair</button>
             </form>
             <a href="editar-cliente.php">
                 <button id="button-head">Editar Conta</button>

@@ -35,7 +35,15 @@ if (!isset($_SESSION['user_id'])) {
             <p> Administração </p>
         </h2>
         <div>
-            <button id="button-sair" onclick="sairTecAd()">Sair</button>
+        <?php
+            require '../controller/loginadmtecProcessa.php';
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
+                sairTecAd();
+            }
+            ?>
+            <form method="POST" style="display:inline;">
+                <button type="submit" name="logout" id="button-sair">Sair</button>
+            </form>
         </div>
     </header>
     <main>

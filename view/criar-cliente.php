@@ -72,6 +72,7 @@ require '../DAO/conexao.php';
                 <button type="submit">Criar Conta</button>
             </div>
         </form>
+        <br>
     </main>
     <footer id="footer-info">
         <p>
