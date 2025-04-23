@@ -5,7 +5,7 @@ class osDAO
 
     public function cadastrarOS(osmodel $OS)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "INSERT INTO Projeto (Condicao, Descricao, LinkUnboxing, DataInicio, DataFim, fk_Tecnico_IDTecnico, fk_Cliente_IDUsuario)
@@ -29,7 +29,7 @@ class osDAO
 
     public function listarOS()
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "SELECT * FROM Projeto ORDER BY IDOs";
@@ -38,7 +38,7 @@ class osDAO
 
     public function resgataPorID($idOS)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "SELECT * FROM Projeto WHERE IDOs='$idOS'";
@@ -47,7 +47,7 @@ class osDAO
 
     public function alterarOS(osmodel $OS)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "UPDATE Projeto SET Condicao = :condicao, Descricao = :descricao, LinkUnboxing = :linkunboxing,
@@ -72,7 +72,7 @@ class osDAO
 
     public function excluirOS($idOS)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "DELETE FROM Projeto WHERE IDOs ='$idOS'";

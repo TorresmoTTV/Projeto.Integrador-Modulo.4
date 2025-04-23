@@ -4,7 +4,7 @@ class AdministradorDAO
 {
     public function cadastrarAdministrador(administradormodel $administrador)
     {
-        include_once "conexao.php";
+        include_once "conexaoDAO.php";
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "INSERT INTO Administrador (Usuario, Senha) VALUES ( :usuario, :senha)";
@@ -22,7 +22,7 @@ class AdministradorDAO
 
     public function listarAdministradores()
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "SELECT * FROM Administrador ORDER BY IDAdmin";
@@ -30,7 +30,7 @@ class AdministradorDAO
     }
 
     public function resgataPorID($IDAdmin) {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "SELECT * FROM Administrador WHERE IDAdmin='$IDAdmin'";
@@ -39,7 +39,7 @@ class AdministradorDAO
 
     public function alterarAdministrador(administradormodel $admin)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "UPDATE Administrador SET Usuario = :usuario, Senha = :senha WHERE IDAdmin = :id";
@@ -57,7 +57,7 @@ class AdministradorDAO
 
     public function excluirAdministrador($IDAdmin)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "DELETE FROM Administrador WHERE idAlu='$IDAdmin'";
@@ -72,7 +72,7 @@ class AdministradorDAO
 
     public function buscarAdministradorPorLoginSenha($login, $senha)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         include_once '../model/administradormodel.php';
         
         $conex = new Conexao();

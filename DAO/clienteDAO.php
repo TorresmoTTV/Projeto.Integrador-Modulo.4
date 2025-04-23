@@ -4,7 +4,7 @@ class ClienteDAO
 
     public function cadastrarCliente(clientemodel $cliente)
     {
-        include_once __DIR__ . '/conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "INSERT INTO Cliente (Nome, Email, Endereco, CPF, Telefone, UsuarioCliente, Senha)
@@ -28,7 +28,7 @@ class ClienteDAO
 
     public function listarClientes()
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "SELECT * FROM Cliente ORDER BY IDUsuario";
@@ -37,7 +37,7 @@ class ClienteDAO
 
     public function resgataPorID($idUsuario)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "SELECT * FROM Cliente WHERE IDUsuario='$idUsuario'";
@@ -46,7 +46,7 @@ class ClienteDAO
 
     public function alterarCliente(clientemodel $cliente)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "UPDATE Cliente SET Nome = :nome, Email = :email, Endereco = :endereco, CPF = :cPF,
@@ -71,7 +71,7 @@ class ClienteDAO
 
     public function excluirCliente($idUsuario)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "DELETE FROM Cliente WHERE IDUsuario='$idUsuario'";

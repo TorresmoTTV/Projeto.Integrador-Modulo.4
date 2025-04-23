@@ -4,7 +4,7 @@ class TecnicoDAO
 {
     public function cadastrarTecnico(tecnicomodel $tecnico)
     {
-        include_once 'conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new conexao();
         $conex->fazConexao();
         $sql = "INSERT INTO Tecnico (Nome, Telefone, Email, CPF, UsuarioTec, Senha)
@@ -26,7 +26,7 @@ class TecnicoDAO
     }
 
     public function listarTecnicos() {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "SELECT * FROM Tecnico ORDER BY IDTecnico";
@@ -34,7 +34,7 @@ class TecnicoDAO
     }
 
     public function resgataPorID($idTecnico) {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "SELECT * FROM aluno WHERE IDTecnico='$idTecnico'";
@@ -42,7 +42,7 @@ class TecnicoDAO
     }
 
     public function alterarTecnico($idTecnico, $nome, $telefone, $email, $cpf, $usuarioTec, $senha) {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "UPDATE Tecnico SET Nome = :nome, Telefone = :telefone, Email = :email, CPF = :cPF, UsuarioTec = :usuarioTec, Senha = :senha where IDTecnico = :iDTecnico";
@@ -64,7 +64,7 @@ class TecnicoDAO
     }
 
     public function excluirTecnico($idTecnico) {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         $conex = new Conexao();
         $conex->fazConexao();
         $sql = "DELETE FROM Tecnico WHERE IDTecnico ='$idTecnico'";
@@ -79,7 +79,7 @@ class TecnicoDAO
 
     public function buscarTecnicoPorLoginSenha($login, $senha)
     {
-        include_once 'Conexao.php';
+        include_once 'conexaoDAO.php';
         include_once '../model/tecnicomodel.php';
         
         $conex = new Conexao();

@@ -29,6 +29,7 @@ if (!isset($_SESSION['user_id'])) {
         </h2>
     </header>
     <main>
+        <br><br>
         <form action="editar-cliente.php" method="POST">
             <div class="form-container">
                 <div class="form-column">
@@ -75,6 +76,7 @@ if (!isset($_SESSION['user_id'])) {
                     <button>Voltar para Pedidos</button></a>
             </div>
         </div>
+    <br>
     </main>
     <footer id="footer-info">
         <p>
