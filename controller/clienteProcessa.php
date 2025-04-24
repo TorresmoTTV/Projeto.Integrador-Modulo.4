@@ -3,7 +3,7 @@
 function criarConta()
 {
     require '../DAO/conexao.php';
-    
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nome = $_POST['nome'];
         $email = $_POST['email'];
@@ -32,13 +32,74 @@ function criarConta()
 //excluir conta cliente
 function excluirConta()
 {
+    require '../DAO/conexao.php';
 
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: ../index.php');
+        exit();
+    }
+
+    $idUsuario = $_SESSION['user_id'];
+
+    // Exclui o usuário da tabela cliente
+    $stmt = $pdo->prepare("DELETE FROM cliente WHERE IDUsuario = ?");
+    if ($stmt->execute([$idUsuario])) {
+        // Encerra a sessão e redireciona
+        session_unset();
+        session_destroy();
+        header('Location: ../index.php');
+        exit();
+    } else {
+        echo "<script>alert('Erro ao excluir a conta. Tente novamente.');</script>";
+    }
 }
+
 //alterar conta cliente
 function atualizarConta()
 {
+    require '../DAO/conexao.php';
 
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: ../index.php');
+        exit();
+    }
+
+    $idUsuario = $_SESSION['user_id'];
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $endereco = $_POST['endereco'];
+    $cpf = $_POST['cpf'];
+    $telefone = $_POST['telefone'];
+    $usuario = $_POST['usuario'];
+    $senha = $_POST['senha'];
+
+    // Verifica se o nome de usuário já existe para outro usuário
+    $stmt = $pdo->prepare("SELECT IDUsuario FROM cliente WHERE UsuarioCliente = ? AND IDUsuario != ?");
+    $stmt->execute([$usuario, $idUsuario]);
+    if ($stmt->fetch()) {
+        echo "<script>alert('Nome de usuário já está em uso por outro cliente.'); window.location.href='editar-cliente.php';</script>";
+        exit();
+    }
+
+    // Atualiza com ou sem alteração de senha
+    if (!empty($senha)) {
+        $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
+        $sql = "UPDATE cliente SET Nome = ?, Email = ?, Endereco = ?, CPF = ?, Telefone = ?, UsuarioCliente = ?, Senha = ? WHERE IDUsuario = ?";
+        $params = [$nome, $email, $endereco, $cpf, $telefone, $usuario, $senhaHash, $idUsuario];
+    } else {
+        $sql = "UPDATE cliente SET Nome = ?, Email = ?, Endereco = ?, CPF = ?, Telefone = ?, UsuarioCliente = ? WHERE IDUsuario = ?";
+        $params = [$nome, $email, $endereco, $cpf, $telefone, $usuario, $idUsuario];
+    }
+
+    $stmt = $pdo->prepare($sql);
+    if ($stmt->execute($params)) {
+        echo "<script>alert('Conta atualizada com sucesso.'); window.location.href='page-cliente.php';</script>";
+    } else {
+        echo "<script>alert('Erro ao atualizar conta.');</script>";
+    }
 }
+
 
 function entrarCliente()
 {
