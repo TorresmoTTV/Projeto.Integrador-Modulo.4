@@ -2,7 +2,7 @@
 session_start();
 require '../DAO/conexao.php';
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'admin') {
     header('Location: area-funcionario.php');
     exit();
 }
@@ -35,7 +35,7 @@ if (!isset($_SESSION['user_id'])) {
             <p> Administração </p>
         </h2>
         <div>
-        <?php
+            <?php
             require '../controller/loginadmtecProcessa.php';
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
                 sairTecAd();

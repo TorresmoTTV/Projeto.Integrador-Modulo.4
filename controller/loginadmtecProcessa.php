@@ -4,24 +4,41 @@ require_once '../DAO/tecnicoDAO.php';
 
 function entrarFuncionario()
 {
-    require 'DAO/conexao.php';
+    require '../DAO/conexao.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
-
-        $stmt = $pdo->prepare("SELECT * FROM tecnico WHERE UsuarioTec = ?");
-        $stmt->execute([$username]);
-        $user = $stmt->fetch();
-
-        if ($user && password_verify($password, $user['Senha'])) {
-            $_SESSION['user_id'] = $user['IDTecnico'];
-            $_SESSION['username'] = $user['UsuarioTec'];
-            header('Location: view/page-cliente.php');
+    
+        // Primeiro tenta login como Administrador
+        $stmtAdmin = $pdo->prepare("SELECT * FROM Administrador WHERE UsuarioAdmin = ?");
+        $stmtAdmin->execute([$username]);
+        $admin = $stmtAdmin->fetch();
+    
+        if ($admin && password_verify($password, $admin['Senha'])) {
+            $_SESSION['user_id'] = $admin['IDAdmin'];
+            $_SESSION['username'] = $admin['UsuarioAdmin'];
+            $_SESSION['tipo'] = 'admin'; // Salva o tipo de usuário na sessão
+            header('Location: page-admin.php'); // Redireciona para página do Administrador
             exit();
-        } else {
-            $error = 'Nome de usuário ou senha inválidos';
         }
+    
+        // Se não for Administrador, tenta login como Técnico
+        $stmtTec = $pdo->prepare("SELECT * FROM Tecnico WHERE UsuarioTec = ?");
+        $stmtTec->execute([$username]);
+        $tecnico = $stmtTec->fetch();
+    
+        if ($tecnico && password_verify($password, $tecnico['Senha'])) {
+            $_SESSION['user_id'] = $tecnico['IDTecnico'];
+            $_SESSION['username'] = $tecnico['UsuarioTec'];
+            $_SESSION['tipo'] = 'tecnico'; // Salva o tipo de usuário na sessão
+            header('Location: page-funcionario.php'); // Redireciona para página do Técnico
+            exit();
+        }
+    
+        // Se não encontrou em nenhum dos dois
+        echo "<script>alert('Nome de usuário ou senha inválidos'); window.location.href='area-funcionario.php';</script>";
+        exit();
     }
 }
 
