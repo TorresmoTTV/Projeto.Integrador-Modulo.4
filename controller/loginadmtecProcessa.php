@@ -5,12 +5,13 @@ require_once '../DAO/tecnicoDAO.php';
 function entrarFuncionario()
 {
     require '../DAO/conexao.php';
+    global $pdo;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = $_POST['usuario'];
+        $password = $_POST['senha'];
     
-        // Primeiro tenta login como Administrador
+        // Login Administrador
         $stmtAdmin = $pdo->prepare("SELECT * FROM Administrador WHERE UsuarioAdmin = ?");
         $stmtAdmin->execute([$username]);
         $admin = $stmtAdmin->fetch();
@@ -18,12 +19,12 @@ function entrarFuncionario()
         if ($admin && password_verify($password, $admin['Senha'])) {
             $_SESSION['user_id'] = $admin['IDAdmin'];
             $_SESSION['username'] = $admin['UsuarioAdmin'];
-            $_SESSION['tipo'] = 'admin'; // Salva o tipo de usuário na sessão
-            header('Location: page-admin.php'); // Redireciona para página do Administrador
+            $_SESSION['tipo'] = 'admin';
+            header('Location: area-administrador.php');
             exit();
         }
     
-        // Se não for Administrador, tenta login como Técnico
+        // Login Técnico
         $stmtTec = $pdo->prepare("SELECT * FROM Tecnico WHERE UsuarioTec = ?");
         $stmtTec->execute([$username]);
         $tecnico = $stmtTec->fetch();
@@ -31,12 +32,12 @@ function entrarFuncionario()
         if ($tecnico && password_verify($password, $tecnico['Senha'])) {
             $_SESSION['user_id'] = $tecnico['IDTecnico'];
             $_SESSION['username'] = $tecnico['UsuarioTec'];
-            $_SESSION['tipo'] = 'tecnico'; // Salva o tipo de usuário na sessão
-            header('Location: page-funcionario.php'); // Redireciona para página do Técnico
+            $_SESSION['tipo'] = 'tecnico';
+            header('Location: page-tecnico.php');
             exit();
         }
     
-        // Se não encontrou em nenhum dos dois
+        // Falha no login
         echo "<script>alert('Nome de usuário ou senha inválidos'); window.location.href='area-funcionario.php';</script>";
         exit();
     }
@@ -47,7 +48,6 @@ function sairTecAd()
     session_start();
     session_unset();
     session_destroy();
-    header('Location: view/area-funcionario.php');
+    header('Location: area-funcionario.php');
     exit();
 }
-?>

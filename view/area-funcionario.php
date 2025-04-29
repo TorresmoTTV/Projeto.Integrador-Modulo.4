@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once '../DAO/conexao.php';
+require_once '../controller/loginadmtecProcessa.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    entrarFuncionario();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -19,7 +29,7 @@
     </header>
     <br>
     <main>
-        <form action="area-funcionario.html" method="POST">
+        <form action="area-funcionario.php" method="POST">
             <div id="form-container-login">
                 <div class="form-column">
                     <div class="form-group">
@@ -33,11 +43,11 @@
                 </div>
             </div>
             <div id="div-center">
-                <button type="submit" onclick="entrarFuncionario()">Entrar</button>
+                <button type="submit">Entrar</button>
             </div>
         </form>
         <div id="div-center">
-            <a href="../index.php">
+            <a href="area-cliente.php">
                 <button>Área Cliente</button>
             </a>
         </div>

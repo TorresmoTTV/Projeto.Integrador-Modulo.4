@@ -8,14 +8,14 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/stylecriarcli.css">
+    <link rel="stylesheet" href="../styles/stylecriarcli.css">
     <title>Área de Login</title>
 </head>
 
 <body>
     <header>
         <h2>
-            <img src="img/logo.png" alt="Logo Empresa" id="logo-empresa">
+            <img src="../img/logo.png" alt="Logo Empresa" id="logo-empresa">
         </h2>
         <h2>
             <p id="h2-right"> Área do Cliente </p>
@@ -24,7 +24,7 @@ session_start();
     <main>
     <br>
         <?php
-        require 'controller/clienteProcessa.php';
+        require '../controller/clienteProcessa.php';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             entrarCliente();
         }
@@ -33,7 +33,7 @@ session_start();
             <p style="color:red;"><?php echo $error; ?></p>
         <?php endif; ?>
         <div id="form-container-wrapper">
-            <form action="index.php" method="POST">
+            <form method="POST">
                 <div id="form-container-login">
                     <div class="form-column">
                         <div class="form-group">
@@ -51,12 +51,12 @@ session_start();
                 </div>
             </form>
             <div id="div-center">
-                <a href="view/criar-cliente.php">
+                <a href="criar-cliente.php">
                     <button>Criar Conta</button>
                 </a>
             </div>
             <div id="div-center">
-                <a href="view/area-funcionario.php">
+                <a href="area-funcionario.php">
                     <button>Área dos Funcionários</button>
                 </a>
             </div>

@@ -22,7 +22,7 @@ function criarConta()
             $stmt = $pdo->prepare('INSERT INTO cliente (Nome, Email, Endereco, CPF, Telefone, UsuarioCliente, Senha) VALUES (?, ?, ?, ?, ?, ?, ?)');
             if ($stmt->execute([$nome, $email, $endereco, $cpf, $telefone, $username, $hashed_password])) {
                 $sucess = 'Usuário registrado com sucesso. Você pode fazer login agora.';
-                header('Location: ../index.php');
+                header('Location: ../view/page-cliente.php');
             } else {
                 $error = "Erro ao registrar usuário. Tente novamente.";
             }
@@ -36,7 +36,7 @@ function excluirConta()
 
     // Verifica se o usuário está logado
     if (!isset($_SESSION['user_id'])) {
-        header('Location: ../index.php');
+        header('Location: ../view/page-cliente.php');
         exit();
     }
 
@@ -48,7 +48,7 @@ function excluirConta()
         // Encerra a sessão e redireciona
         session_unset();
         session_destroy();
-        header('Location: ../index.php');
+        header('Location: ../view/page-cliente.php');
         exit();
     } else {
         echo "<script>alert('Erro ao excluir a conta. Tente novamente.');</script>";
@@ -61,7 +61,7 @@ function atualizarConta()
     require '../DAO/conexao.php';
 
     if (!isset($_SESSION['user_id'])) {
-        header('Location: ../index.php');
+        header('Location: ../view/page-cliente.php');
         exit();
     }
 
@@ -103,7 +103,7 @@ function atualizarConta()
 
 function entrarCliente()
 {
-    require 'DAO/conexao.php';
+    require '../DAO/conexao.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST['username'];
@@ -116,11 +116,11 @@ function entrarCliente()
         if ($user && password_verify($password, $user['Senha'])) {
             $_SESSION['user_id'] = $user['IDUsuario'];
             $_SESSION['username'] = $user['UsuarioCliente'];
-            header('Location: view/page-cliente.php');
+            header('Location: page-cliente.php');
             exit();
         } else {
             $error = 'Nome de usuário ou senha inválidos';
-        }//erro fim
+        }
     }
 }
 
@@ -129,7 +129,7 @@ function sairCliente()
     session_start();
     session_unset();
     session_destroy();
-    header('Location: ../index.php');
+    header('Location: ../view/area-cliente.php');
     exit();
 }
 ?>
