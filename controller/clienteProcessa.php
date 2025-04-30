@@ -140,29 +140,75 @@ function buscarPedidosPorCliente($pdo, $clienteId)
             WHERE fk_Cliente_IDUsuario = ?";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(1, $clienteId, PDO::PARAM_INT);
-    $stmt->execute();
-    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->execute([$clienteId]);
+    $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if (count($resultado) > 0) {
-        foreach ($resultado as $pedido) {
-            $dataInicio = $pedido['DataInicio'] ? date('d/m/Y', strtotime($pedido['DataInicio'])) : '';
-            $dataFim = $pedido['DataFim'] ? date('d/m/Y', strtotime($pedido['DataFim'])) : '';
+    if ($pedidos) {
+        foreach ($pedidos as $pedido) {
+            $dataInicio = $pedido['DataInicio'] ? date('d/m/Y H:i', strtotime($pedido['DataInicio'])) : '---';
+            $dataFim = $pedido['DataFim'] ? date('d/m/Y H:i', strtotime($pedido['DataFim'])) : '---';
 
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($pedido['IDOs']) . "</td>";
-            echo "<td>" . htmlspecialchars($pedido['Condicao']) . "</td>";
-            echo "<td>" . htmlspecialchars($pedido['Descricao']) . "</td>";
-            echo "<td>" . htmlspecialchars($dataInicio) . "</td>";
-            echo "<td>" . htmlspecialchars($dataFim) . "</td>";
-            echo "<td><a href='" . htmlspecialchars($pedido['LinkUnboxing']) . "' target='_blank'>Ver</a></td>";
-            echo "</tr>";
+            echo "<div class='card-pedido'>";
+            echo "<div class='cabecalho'>";
+            echo "<strong>Número:</strong> #{$pedido['IDOs']}<br>";
+            echo "<strong>Status:</strong> {$pedido['Condicao']}<br>";
+            echo "<strong>Início:</strong> {$dataInicio}<br>";
+            echo "<strong>Fim:</strong> {$dataFim}<br>";
+            echo "</div>";
+
+            echo "<div class='descricao'>";
+            echo "<strong>Descrição:</strong> " . htmlspecialchars($pedido['Descricao']) . "<br>";
+
+            // Verificar se o link é do YouTube
+            if (!empty($pedido['LinkUnboxing']) && filter_var($pedido['LinkUnboxing'], FILTER_VALIDATE_URL)) {
+                $url = $pedido['LinkUnboxing'];
+                if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
+                    echo "<strong>Unboxing:</strong> <a href='{$url}' target='_blank'>Ver vídeo</a><br>";
+                } else {
+                    echo "<strong>Unboxing:</strong> Link inválido para YouTube.<br>";
+                }
+            }
+            echo "</div>";
+
+            echo "<div class='linha-status'>";
+            echo gerarLinhaStatus($pedido['Condicao'], $pedido['DataInicio'], $pedido['DataFim']);
+            echo "</div>";
+
+            echo "</div>";
         }
     } else {
-        echo "<tr><td colspan='6'>Nenhum pedido encontrado.</td></tr>";
+        echo "<p>Nenhum pedido encontrado.</p>";
     }
 }
 
+function gerarLinhaStatus($condicao, $dataInicio, $dataFim)
+{
+    $etapas = [
+        'Início' => $dataInicio,
+        'Finalização' => $dataFim
+    ];
+
+    $saida = "";
+    foreach ($etapas as $nome => $data) {
+        $ativa = (
+            strtolower($condicao) === strtolower($nome) ||
+            strtolower($condicao) === 'concluído' ||
+            strtolower($condicao) === 'produto entregue'
+        );
+        $classe = $ativa ? 'etapa ativa' : 'etapa';
+
+        $saida .= "<div class='$classe'><div class='ponto'></div><span>$nome</span>";
+
+        // Verifica se a data é válida
+        $timestamp = strtotime($data);
+        if ($data && $timestamp && $timestamp > 0) {
+            $saida .= "<div class='data-etapa'>" . date('d/m/Y', $timestamp) . "</div>";
+        }
+
+        $saida .= "</div>";
+    }
+    return $saida;
+}
 
 
 function sairCliente()

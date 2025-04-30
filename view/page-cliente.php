@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/stylecriarcli.css">
+    <link rel="stylesheet" href="../styles/style-card.css">
     <title>Seus Pedidos</title>
 </head>
 
@@ -46,19 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
         </div>
     </header>
     <main>
-        <div id="div-center">
-            <table border="1">
-                <tr>
-                    <th>Número</th>
-                    <th>Condição</th>
-                    <th>Descrição</th>
-                    <th>Data de Criação</th>
-                    <th>Data de Finalização</th>
-                    <th>Link Unboxing</th>
-                </tr>
+            <div id="div-center">
                 <?php buscarPedidosPorCliente($pdo, $_SESSION['user_id']); ?>
-            </table>
-        </div>
+            </div>
     </main>
     <footer id="footer-info">
         <p>
