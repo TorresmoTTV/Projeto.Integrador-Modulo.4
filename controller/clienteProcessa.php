@@ -133,34 +133,37 @@ function buscarClientePorId($pdo, $idUsuario)
     return $stmt->fetch();
 }
 
-function buscarPedidosPorCliente($conexao, $clienteId)
+function buscarPedidosPorCliente($pdo, $clienteId)
 {
-    $sql = "SELECT IDOs, Condicao, Descricao, DataInicio, DataFim, LinkUnboxing 
-            FROM projeto_ordemdeservico 
+    $sql = "SELECT IDOs, Condicao, Descricao, DataInicio, DataFim, LinkUnboxing
+            FROM projeto_ordemdeservico
             WHERE fk_Cliente_IDUsuario = ?";
 
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $clienteId);
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(1, $clienteId, PDO::PARAM_INT);
     $stmt->execute();
-    $resultado = $stmt->get_result();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($resultado->num_rows > 0) {
-        while ($pedido = $resultado->fetch_assoc()) {
+    if (count($resultado) > 0) {
+        foreach ($resultado as $pedido) {
+            $dataInicio = $pedido['DataInicio'] ? date('d/m/Y', strtotime($pedido['DataInicio'])) : '';
+            $dataFim = $pedido['DataFim'] ? date('d/m/Y', strtotime($pedido['DataFim'])) : '';
+
             echo "<tr>";
             echo "<td>" . htmlspecialchars($pedido['IDOs']) . "</td>";
             echo "<td>" . htmlspecialchars($pedido['Condicao']) . "</td>";
             echo "<td>" . htmlspecialchars($pedido['Descricao']) . "</td>";
-            echo "<td>" . htmlspecialchars($pedido['DataInicio']) . "</td>";
-            echo "<td>" . htmlspecialchars($pedido['DataFim']) . "</td>";
+            echo "<td>" . htmlspecialchars($dataInicio) . "</td>";
+            echo "<td>" . htmlspecialchars($dataFim) . "</td>";
             echo "<td><a href='" . htmlspecialchars($pedido['LinkUnboxing']) . "' target='_blank'>Ver</a></td>";
             echo "</tr>";
         }
     } else {
         echo "<tr><td colspan='6'>Nenhum pedido encontrado.</td></tr>";
     }
-
-    $stmt->close();
 }
+
+
 
 function sairCliente()
 {

@@ -1,12 +1,16 @@
 <?php
 session_start();
+require '../controller/clienteProcessa.php';
 require '../DAO/conexao.php';
-require '../controller/clientetabela.php';
 
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: area-cliente.php');
     exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
+    sairCliente();
 }
 ?>
 
@@ -30,10 +34,8 @@ if (!isset($_SESSION['user_id'])) {
         </h2>
         <div id="div-center">
             <?php
-            require '../controller/clienteProcessa.php';
-            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
-                sairCliente();
-            }
+
+
             ?>
             <form method="POST" style="display:inline;">
                 <button type="submit" name="logout" id="button-sair-cli">Sair</button>
@@ -54,7 +56,7 @@ if (!isset($_SESSION['user_id'])) {
                     <th>Data de Finalização</th>
                     <th>Link Unboxing</th>
                 </tr>
-                <?php buscarPedidosPorCliente($conexao, $_SESSION['user_id']); ?>
+                <?php buscarPedidosPorCliente($pdo, $_SESSION['user_id']); ?>
             </table>
         </div>
     </main>
