@@ -1,19 +1,15 @@
+
 <?php
 session_start();
 require '../DAO/conexao.php';
 require '../controller/clienteProcessa.php';
-
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: area-cliente.php');
     exit();
 }
 
-
-$stmt = $pdo->prepare("SELECT * FROM cliente WHERE IDUsuario = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$usuario = $stmt->fetch();
-
+$usuario = buscarClientePorId($pdo, $_SESSION['user_id']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['excluir'])) {
@@ -23,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 

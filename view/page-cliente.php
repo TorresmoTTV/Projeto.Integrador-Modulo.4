@@ -1,6 +1,8 @@
 <?php
 session_start();
 require '../DAO/conexao.php';
+require '../controller/clientetabela.php';
+
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: area-cliente.php');
@@ -43,25 +45,16 @@ if (!isset($_SESSION['user_id'])) {
     </header>
     <main>
         <div id="div-center">
-            <table>
+            <table border="1">
                 <tr>
-                    Número
+                    <th>Número</th>
+                    <th>Condição</th>
+                    <th>Descrição</th>
+                    <th>Data de Criação</th>
+                    <th>Data de Finalização</th>
+                    <th>Link Unboxing</th>
                 </tr>
-                <tr>
-                    Condição
-                </tr>
-                <tr>
-                    Descrição
-                </tr>
-                <tr>
-                    Data de Criação
-                </tr>
-                <tr>
-                    Data de Finalização
-                </tr>
-                <tr>
-                    Link Unboxing
-                </tr>
+                <?php buscarPedidosPorCliente($conexao, $_SESSION['user_id']); ?>
             </table>
         </div>
     </main>
