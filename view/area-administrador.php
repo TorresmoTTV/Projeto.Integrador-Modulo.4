@@ -26,7 +26,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'admin') {
             <button class="dropbtn" onclick="toggleDropdown()">☰</button>
             <div id="myDropdown" class="dropdown-content">
                 <a href="criar-tecnico.php">Gerenciar Técnicos</a>
-                <a href="gerenicar-os.php">Gerenciar Ordens de Serviço</a>
+                <a href="gerenciar-os.php">Gerenciar Ordens de Serviço</a>
                 <a href="#">Criar Relatórios</a>
             </div>
         </div>

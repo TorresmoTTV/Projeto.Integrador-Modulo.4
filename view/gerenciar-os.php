@@ -28,39 +28,7 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/stylecriarcli.css">
-    <style>
-        .main-container {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-        }
-
-        .form-column, .tabela-container {
-            width: 48%;
-        }
-
-        .tabela-container table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .tabela-container th, .tabela-container td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-        }
-
-        .button-container {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="../styles/style-os.css">
     <title>Gerenciar Ordens de Serviço</title>
 </head>
 
@@ -75,7 +43,7 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="main-container">
         <!-- Formulário -->
-        <form action="../processos/osProcessa.php" method="POST" class="form-column">
+        <form action="../controller/osProcessa.php" method="POST" class="form-column">
             <input type="hidden" name="id_os" value="<?= $osEmEdicao['IDOs'] ?? '' ?>">
 
             <div class="form-group">
@@ -85,12 +53,14 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="form-group">
                 <label>Descrição</label>
-                <input type="text" name="descricao" required maxlength="50" value="<?= $osEmEdicao['Descricao'] ?? '' ?>">
+                <input type="text" name="descricao" required maxlength="50"
+                    value="<?= $osEmEdicao['Descricao'] ?? '' ?>">
             </div>
 
             <div class="form-group">
                 <label>Link Unboxing</label>
-                <input type="text" name="linkUnboxing" required maxlength="255" value="<?= $osEmEdicao['LinkUnboxing'] ?? '' ?>">
+                <input type="text" name="linkUnboxing" required maxlength="255"
+                    value="<?= $osEmEdicao['LinkUnboxing'] ?? '' ?>">
             </div>
 
             <div class="form-group">
@@ -116,7 +86,10 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="button-container">
                 <button type="submit" name="acao" value="<?= $valorAcao ?>"><?= $textoBotao ?></button>
                 <button type="submit" name="acao" value="prepararEdicao">Transformar em Editar</button>
-                <button type="submit" name="acao" value="cancelar">Cancelar</button>
+                <form method="POST">
+                    <input type="hidden" name="acao" value="cancelar">
+                    <button type="submit">Cancelar</button>
+                </form>
             </div>
         </form>
 
@@ -137,7 +110,11 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </thead>
                 <tbody>
                     <?php foreach ($ordens as $os): ?>
-                        <tr class="linha-os" data-id="<?= $os['IDOs'] ?>" data-condicao="<?= $os['Condicao'] ?>" data-descricao="<?= $os['Descricao'] ?>" data-linkunboxing="<?= $os['LinkUnboxing'] ?>" data-datainicio="<?= $os['DataInicio'] ?>" data-datafim="<?= $os['DataFim'] ?>" data-cliente="<?= $os['fk_Cliente_IDUsuario'] ?>" data-tecnico="<?= $os['fk_Tecnico_IDTecnico'] ?>">
+                        <tr class="linha-os" data-id="<?= $os['IDOs'] ?>" data-condicao="<?= $os['Condicao'] ?>"
+                            data-descricao="<?= $os['Descricao'] ?>" data-linkunboxing="<?= $os['LinkUnboxing'] ?>"
+                            data-datainicio="<?= $os['DataInicio'] ?>" data-datafim="<?= $os['DataFim'] ?>"
+                            data-cliente="<?= $os['fk_Cliente_IDUsuario'] ?>"
+                            data-tecnico="<?= $os['fk_Tecnico_IDTecnico'] ?>">
                             <td><?= $os['IDOs'] ?></td>
                             <td><?= $os['Condicao'] ?></td>
                             <td><?= $os['Descricao'] ?></td>
@@ -154,7 +131,7 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div style="text-align: center; margin: 20px;">
-        <form action="../processos/osProcessa.php" method="POST">
+        <form action="../controller/osProcessa.php" method="POST">
             <input type="hidden" name="acao" value="voltar">
             <button type="submit">Voltar para Página Anterior</button>
         </form>
@@ -163,10 +140,10 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script>
         // Seleciona todas as linhas da tabela com a classe 'linha-os'
         const linhas = document.querySelectorAll('.linha-os');
-        
+
         // Itera sobre as linhas
         linhas.forEach(linha => {
-            linha.addEventListener('click', function() {
+            linha.addEventListener('click', function () {
                 // Pega os dados da linha
                 const idOs = this.getAttribute('data-id');
                 const condicao = this.getAttribute('data-condicao');
@@ -176,7 +153,7 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 const dataFim = this.getAttribute('data-datafim');
                 const cliente = this.getAttribute('data-cliente');
                 const tecnico = this.getAttribute('data-tecnico');
-                
+
                 // Preenche os campos do formulário com os dados da linha
                 document.querySelector('input[name="id_os"]').value = idOs;
                 document.querySelector('input[name="condicao"]').value = condicao;

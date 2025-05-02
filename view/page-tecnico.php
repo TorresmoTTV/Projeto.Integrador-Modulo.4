@@ -25,7 +25,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'tecnico') {
 <body>
     <header>
         <div>
-            <a href="gerenicar-os.php">
+            <a href="gerenciar-os.php">
                 <button id="button-head">Criar/Editar</button></a>
         </div>
         <h2 id="h2-center">

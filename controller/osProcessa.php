@@ -21,7 +21,7 @@ function criarOS()
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$condicao, $descricao, $link, $dataCriacao, $dataFinalizacao, $cliente, $tecnico]);
 
-        header("Location: ../paginas/gerenciar-os.php");
+        header("Location: ../view/gerenciar-os.php");
         exit();
     }
 }
@@ -31,7 +31,7 @@ function cancelarOS()
 {
     unset($_SESSION['os_em_edicao']);
     unset($_SESSION['modo']);
-    header("Location: ../paginas/gerenciar-os.php");
+    header("Location: ../view/gerenciar-os.php");
     exit();
 }
 
@@ -46,7 +46,7 @@ function editarOS($id)
 
     if ($os = $stmt->fetch()) {
         $_SESSION['os_em_edicao'] = $os;
-        header("Location: ../paginas/gerenciar-os.php");
+        header("Location: ../view/gerenciar-os.php");
         exit();
     } else {
         echo "OS não encontrada.";
@@ -57,7 +57,7 @@ function editarOS($id)
 function prepararEdicao()
 {
     $_SESSION['modo'] = 'editar';
-    header("Location: ../paginas/gerenciar-os.php");
+    header("Location: ../view/gerenciar-os.php");
     exit();
 }
 
@@ -83,14 +83,14 @@ function confirmarEdicao()
 
     unset($_SESSION['modo']);
     unset($_SESSION['os_em_edicao']);
-    header("Location: ../paginas/gerenciar-os.php");
+    header("Location: ../view/gerenciar-os.php");
     exit();
 }
 
 // 5. Voltar para página anterior
 function voltarPaginaOS()
 {
-    header("Location: area-funcionario.php");
+    header("Location: ../view/area-funcionario.php");
     exit();
 }
 
