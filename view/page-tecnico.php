@@ -1,8 +1,10 @@
 <?php
 session_start();
 require '../DAO/conexao.php';
+require '../controller/loginadmtecProcessa.php';
+require '../controller/tecnicoProcessa.php';
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'tecnico') {
     header('Location: area-funcionario.php');
     exit();
 }
@@ -15,6 +17,7 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style-tecpage.css">
     <link rel="stylesheet" href="../styles/stylecriarcli.css">
     <title>Projeto/Ordens de Serviço - Técnico</title>
 </head>
@@ -30,7 +33,6 @@ if (!isset($_SESSION['user_id'])) {
         </h2>
         <div>
             <?php
-            require '../controller/loginadmtecProcessa.php';
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
                 sairTecAd();
             }
@@ -42,32 +44,7 @@ if (!isset($_SESSION['user_id'])) {
     </header>
     <main>
         <div id="div-center">
-            <table>
-                <tr>
-                    Número
-                </tr>
-                <tr>
-                    Condição
-                </tr>
-                <tr>
-                    Descrição
-                </tr>
-                <tr>
-                    Data de Criação
-                </tr>
-                <tr>
-                    Data de Finalização
-                </tr>
-                <tr>
-                    Link Unboxing
-                </tr>
-                <tr>
-                    Cliente
-                </tr>
-                <tr>
-                    Técnico
-                </tr>
-            </table>
+            <?php echo gerarTabelaOrdensServico(); ?>
         </div>
     </main>
 </body>
