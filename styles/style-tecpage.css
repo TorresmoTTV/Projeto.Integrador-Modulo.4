@@ -4,11 +4,12 @@ table {
     margin: 20px auto;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    background-color: #2a2a2a; /* Cor de fundo escura para combinar com o body */
     border-radius: 10px;
-    overflow: hidden;
     color: white; /* Texto branco */
+    border-collapse: collapse;
+    background-color: #2a2a2a;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    overflow: hidden;
 }
 
 thead {

@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p id="h2-right"> Área do Funcionário </p>
         </h2>
     </header>
-    <br>
+    <br><br><br>
     <main>
         <form action="area-funcionario.php" method="POST">
             <div id="form-container-login">
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
     </main>
-    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br>
     <footer id="footer-info">
         <p>
             Contato: 4622-8922

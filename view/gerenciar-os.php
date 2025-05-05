@@ -13,12 +13,17 @@ $textoBotao = ($modo === 'editar') ? 'Editar OS' : 'Salvar';
 $valorAcao = ($modo === 'editar') ? 'editarConfirmado' : 'criar';
 
 // Consultar todas as ordens de serviço
-$sql = "SELECT * FROM projeto_ordemdeservico";  // Ajuste a consulta conforme sua tabela real
+$sql = "SELECT * FROM projeto_ordemdeservico";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
 // Armazenar os resultados da consulta
 $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($_GET['acao'] ?? '' === 'cancelar') {
+    unset($_SESSION['os_em_edicao']);
+    unset($_SESSION['modo']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,60 +46,8 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </h2>
     </header>
 
-    <div class="main-container">
-        <!-- Formulário -->
-        <form action="../controller/osProcessa.php" method="POST" class="form-column">
-            <input type="hidden" name="id_os" value="<?= $osEmEdicao['IDOs'] ?? '' ?>">
-
-            <div class="form-group">
-                <label>Condição</label>
-                <input type="text" name="condicao" required maxlength="50" value="<?= $osEmEdicao['Condicao'] ?? '' ?>">
-            </div>
-
-            <div class="form-group">
-                <label>Descrição</label>
-                <input type="text" name="descricao" required maxlength="50"
-                    value="<?= $osEmEdicao['Descricao'] ?? '' ?>">
-            </div>
-
-            <div class="form-group">
-                <label>Link Unboxing</label>
-                <input type="text" name="linkUnboxing" required maxlength="255"
-                    value="<?= $osEmEdicao['LinkUnboxing'] ?? '' ?>">
-            </div>
-
-            <div class="form-group">
-                <label>Data de Criação</label>
-                <input type="date" name="dataCriacao" required value="<?= $osEmEdicao['DataInicio'] ?? '' ?>">
-            </div>
-
-            <div class="form-group">
-                <label>Data de Finalização</label>
-                <input type="date" name="dataFinalizacao" value="<?= $osEmEdicao['DataFim'] ?? '' ?>">
-            </div>
-
-            <div class="form-group">
-                <label>Cliente (ID)</label>
-                <input type="number" name="cliente" required value="<?= $osEmEdicao['fk_Cliente_IDUsuario'] ?? '' ?>">
-            </div>
-
-            <div class="form-group">
-                <label>Técnico (ID)</label>
-                <input type="number" name="tecnico" required value="<?= $osEmEdicao['fk_Tecnico_IDTecnico'] ?? '' ?>">
-            </div>
-
-            <div class="button-container">
-                <button type="submit" name="acao" value="<?= $valorAcao ?>"><?= $textoBotao ?></button>
-                <button type="submit" name="acao" value="prepararEdicao">Transformar em Editar</button>
-                <form method="POST">
-                    <input type="hidden" name="acao" value="cancelar">
-                    <button type="submit">Cancelar</button>
-                </form>
-            </div>
-        </form>
-
-        <!-- Tabela -->
-        <div class="tabela-container">
+    <div class="pagina-central">
+        <div class="container-centralizado">
             <table>
                 <thead>
                     <tr>
@@ -127,51 +80,56 @@ $ordens = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <form action="../controller/osProcessa.php" method="POST" class="form-column">
+                <input type="hidden" name="id_os" value="<?= $osEmEdicao['IDOs'] ?? '' ?>">
+                <input type="hidden" name="acao" value="<?= $valorAcao ?>">
+
+                <div class="form-group">
+                    <label>Condição</label>
+                    <input type="text" name="condicao" required maxlength="50" value="<?= $osEmEdicao['Condicao'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea name="descricao" required maxlength="255"><?= $osEmEdicao['Descricao'] ?? '' ?></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Link Unboxing</label>
+                    <input type="text" name="linkUnboxing" required maxlength="255" value="<?= $osEmEdicao['LinkUnboxing'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Data de Criação</label>
+                    <input type="date" name="dataCriacao" required value="<?= $osEmEdicao['DataInicio'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Data de Finalização</label>
+                    <input type="date" name="dataFinalizacao" value="<?= $osEmEdicao['DataFim'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Cliente (ID)</label>
+                    <input type="number" name="cliente" required value="<?= $osEmEdicao['fk_Cliente_IDUsuario'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Técnico (ID)</label>
+                    <input type="number" name="tecnico" required value="<?= $osEmEdicao['fk_Tecnico_IDTecnico'] ?? '' ?>">
+                </div>
+
+                <div class="button-container">
+                    <button type="submit"><?= $textoBotao ?></button>
+                    <button type="button" onclick="window.location.href='gerenciar-os.php?acao=cancelar'">Cancelar</button>
+                    <button type="button" onclick="window.history.back()">Voltar</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div style="text-align: center; margin: 20px;">
-        <form action="../controller/osProcessa.php" method="POST">
-            <input type="hidden" name="acao" value="voltar">
-            <button type="submit">Voltar para Página Anterior</button>
-        </form>
-    </div>
-
-    <script>
-        // Seleciona todas as linhas da tabela com a classe 'linha-os'
-        const linhas = document.querySelectorAll('.linha-os');
-
-        // Itera sobre as linhas
-        linhas.forEach(linha => {
-            linha.addEventListener('click', function () {
-                // Pega os dados da linha
-                const idOs = this.getAttribute('data-id');
-                const condicao = this.getAttribute('data-condicao');
-                const descricao = this.getAttribute('data-descricao');
-                const linkUnboxing = this.getAttribute('data-linkunboxing');
-                const dataInicio = this.getAttribute('data-datainicio');
-                const dataFim = this.getAttribute('data-datafim');
-                const cliente = this.getAttribute('data-cliente');
-                const tecnico = this.getAttribute('data-tecnico');
-
-                // Preenche os campos do formulário com os dados da linha
-                document.querySelector('input[name="id_os"]').value = idOs;
-                document.querySelector('input[name="condicao"]').value = condicao;
-                document.querySelector('input[name="descricao"]').value = descricao;
-                document.querySelector('input[name="linkUnboxing"]').value = linkUnboxing;
-                document.querySelector('input[name="dataCriacao"]').value = dataInicio;
-                document.querySelector('input[name="dataFinalizacao"]').value = dataFim;
-                document.querySelector('input[name="cliente"]').value = cliente;
-                document.querySelector('input[name="tecnico"]').value = tecnico;
-
-                // Altera o modo para "editar" e atualiza o botão
-                document.querySelector('button[type="submit"]').textContent = 'Editar OS';
-                document.querySelector('input[name="acao"]').value = 'editarConfirmado';  // Configura a ação como editar
-            });
-        });
-    </script>
+    <script src="../scripts/gerenciar-os.js"></script> <!-- Script externo -->
 </body>
-
-<footer></footer>
 
 </html>

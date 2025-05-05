@@ -146,14 +146,23 @@ function buscarPedidosPorCliente($pdo, $clienteId)
     if ($pedidos) {
         foreach ($pedidos as $pedido) {
             $dataInicio = $pedido['DataInicio'] ? date('d/m/Y H:i', strtotime($pedido['DataInicio'])) : '---';
-            $dataFim = $pedido['DataFim'] ? date('d/m/Y H:i', strtotime($pedido['DataFim'])) : '---';
 
             echo "<div class='card-pedido'>";
             echo "<div class='cabecalho'>";
             echo "<strong>Número:</strong> #{$pedido['IDOs']}<br>";
             echo "<strong>Status:</strong> {$pedido['Condicao']}<br>";
             echo "<strong>Início:</strong> {$dataInicio}<br>";
-            echo "<strong>Fim:</strong> {$dataFim}<br>";
+
+            // Exibe DataFim somente se for válida
+            if (!empty($pedido['DataFim']) && $pedido['DataFim'] !== '0000-00-00' && $pedido['DataFim'] !== '0000-00-00 00:00:00') {
+                $timestampFim = strtotime($pedido['DataFim']);
+                if ($timestampFim && $timestampFim > 0) {
+                    $dataFim = date('d/m/Y H:i', $timestampFim);
+                    echo "<strong>Fim:</strong> {$dataFim}<br>";
+                }
+            }
+
+
             echo "</div>";
 
             echo "<div class='descricao'>";
@@ -199,16 +208,19 @@ function gerarLinhaStatus($condicao, $dataInicio, $dataFim)
 
         $saida .= "<div class='$classe'><div class='ponto'></div><span>$nome</span>";
 
-        // Verifica se a data é válida
-        $timestamp = strtotime($data);
-        if ($data && $timestamp && $timestamp > 0) {
-            $saida .= "<div class='data-etapa'>" . date('d/m/Y', $timestamp) . "</div>";
+        if (!empty($data) && $data !== '0000-00-00' && $data !== '0000-00-00 00:00:00') {
+            $timestamp = strtotime($data);
+            if ($timestamp && $timestamp > 0) {
+                $saida .= "<div class='data-etapa'>" . date('d/m/Y', $timestamp) . "</div>";
+            }
         }
 
         $saida .= "</div>";
     }
     return $saida;
 }
+
+
 
 
 function sairCliente()

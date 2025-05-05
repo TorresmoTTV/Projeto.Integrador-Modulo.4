@@ -22,7 +22,7 @@ session_start();
         </h2>
     </header>
     <main>
-    <br>
+    <br><br><br>
         <?php
         require '../controller/clienteProcessa.php';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -61,7 +61,7 @@ session_start();
                 </a>
             </div>
         </div>
-        <br><br><br><br><br>
+        <br><br><br><br>
     </main>
     <footer id="footer-info">
         <p>
