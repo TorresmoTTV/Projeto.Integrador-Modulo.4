@@ -2,98 +2,121 @@
 session_start();
 require '../DAO/conexao.php';
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'admin') {
     header('Location: area-funcionario.php');
     exit();
 }
 
+$tecnicoEmEdicao = $_SESSION['tecnico_em_edicao'] ?? null;
+$modo = $_SESSION['modo'] ?? 'criar';
+$textoBotao = ($modo === 'editar') ? 'Editar Técnico' : 'Salvar';
+$valorAcao = ($modo === 'editar') ? 'editarConfirmado' : 'criar';
+
+// Consultar todos os técnicos
+$sql = "SELECT * FROM Tecnico";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+
+// Armazenar os resultados da consulta
+$tecnicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($_GET['acao'] ?? '' === 'cancelar') {
+    unset($_SESSION['tecnico_em_edicao']);
+    unset($_SESSION['modo']);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/stylecriarcli.css">
-    <title>Criar Conta - Técnicos</title>
+    <link rel="stylesheet" href="../styles/style-criatec.css">
+    <title>Gerenciar Técnicos</title>
 </head>
-
 <body>
     <header>
+        <h2><img src="../img/logo.png" alt="Logo Empresa" id="logo-empresa"></h2>
         <h2>
-            <img src="../img/logo.png" alt="Logo Empresa" id="logo-empresa">
-        </h2>
-        <h2>
-            <p id="h2-right"> Criar Conta - Técnicos </p>
+            <p id="h2-right">Gerenciar</p>
+            <p id="h2-right">Técnicos</p>
         </h2>
     </header>
-    <main>
-        <form action="criar-tecnico.php" method="POST">
-            <div class="form-container">
-                <div class="form-column">
-                    <div class="form-group">
-                        <label>Nome</label>
-                        <input type="text" name="nome" required maxlength="50">
-                    </div>
-                    <div class="form-group">
-                        <label>E-mail</label>
-                        <input type="email" name="email" required maxlength="50">
-                    </div>
-                    <div class="form-group">
-                        <label>C.P.F</label>
-                        <input type="text" name="cpf" required maxlength="14">
-                    </div>
-                    <div class="form-group">
-                        <label>Telefone</label>
-                        <input type="tel" name="telefone" required maxlength="15">
-                    </div>
-                    <div class="form-group">
-                        <label>Usuário</label>
-                        <input type="text" name="usuario" required maxlength="30">
-                    </div>
-                    <div class="form-group">
-                        <label>Senha</label>
-                        <input type="password" name="senha" required maxlength="20">
-                    </div>
-                </div>
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>
-                                    Id
-                                </td>
-                                <td>
-                                    Nome
-                                </td>
-                                <td>
-                                    E-mail
-                                </td>
-                                <td>
-                                    C.P.F
-                                </td>
-                                <td>
-                                    Telefone
-                                </td>
-                                <td>
-                                    Usuário
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-            <div class="button-container">
-                <button type="submit" onclick="criarContaTec()">Criar</button>
-                <button type="submit" onclick="editarContaTec()">Editar Conta</button>
-                <button type="submit" onclick="cancelarContaTec()">Cancelar</button>
-            </div>
-        </form>
-        <div id="div-center">
-            <button type="submit" onclick="voltarViewTec()">Voltar para Administrador</button>
-        </div>
-    </main>
-</body>
 
+    <div class="pagina-central">
+        <div class="container-centralizado">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Usuário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($tecnicos as $tecnico): ?>
+                        <tr class="linha-tecnico" data-id="<?= $tecnico['IDTecnico'] ?>" data-nome="<?= $tecnico['Nome'] ?>"
+                            data-email="<?= $tecnico['Email'] ?>" data-cpf="<?= $tecnico['CPF'] ?>"
+                            data-telefone="<?= $tecnico['Telefone'] ?>" data-usuario="<?= $tecnico['UsuarioTec'] ?>"
+                            data-senha="<?= $tecnico['Senha'] ?>">
+                            <td><?= $tecnico['IDTecnico'] ?></td>
+                            <td><?= $tecnico['Nome'] ?></td>
+                            <td><?= $tecnico['Email'] ?></td>
+                            <td><?= $tecnico['CPF'] ?></td>
+                            <td><?= $tecnico['Telefone'] ?></td>
+                            <td><?= $tecnico['UsuarioTec'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <form action="../controller/tecnicoProcessa.php" method="POST" class="form-column">
+                <input type="hidden" name="id_tecnico" value="<?= $tecnicoEmEdicao['IDTecnico'] ?? '' ?>">
+                <input type="hidden" name="acao" value="<?= $valorAcao ?>">
+
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" name="nome" required maxlength="50" value="<?= $tecnicoEmEdicao['Nome'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required maxlength="100" value="<?= $tecnicoEmEdicao['Email'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>CPF</label>
+                    <input type="text" name="cpf" required maxlength="14" value="<?= $tecnicoEmEdicao['CPF'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="text" name="telefone" required maxlength="14" value="<?= $tecnicoEmEdicao['Telefone'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Usuário</label>
+                    <input type="text" name="usuario" required maxlength="50" value="<?= $tecnicoEmEdicao['UsuarioTec'] ?? '' ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" name="senha" required maxlength="255" value="<?= $tecnicoEmEdicao['Senha'] ?? '' ?>">
+                </div>
+
+                <div class="button-container">
+                    <button type="submit"><?= $textoBotao ?></button>
+                    <button type="button" onclick="window.location.href='criar-tecnico.php?acao=cancelar'">Cancelar</button>
+                    <button type="button" onclick="window.history.back()">Voltar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../scripts/criar-tecnico.js"></script> <!-- Script externo -->
+</body>
 </html>

@@ -4,7 +4,7 @@ require '../controller/clienteProcessa.php';
 require '../DAO/conexao.php';
 
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] == 'tecnico' || $_SESSION['tipo'] == 'tecnico') {
     header('Location: area-cliente.php');
     exit();
 }

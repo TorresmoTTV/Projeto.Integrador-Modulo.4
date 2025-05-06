@@ -1,23 +1,102 @@
 <?php
+require '../DAO/conexao.php';
 
-function criarContaTec()
-{
-
+// Lógica para determinar a ação
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])) {
+    $acao = $_POST['acao'];
+    switch ($acao) {
+        case 'criar':
+            criarTecnico();
+            break;
+        case 'editarConfirmado':
+            confirmarEdicaoTecnico();
+            break;
+        case 'cancelar':
+            cancelarTecnico();
+            break;
+        case 'voltar':
+            voltarPaginaTecnico();
+            break;
+        case 'listar':
+            $tecnicos = listarTecnicos();
+            break;
+        default:
+            header("Location: ../view/criar-tecnico.php");
+            exit();
+    }
 }
 
-function editarContaTec()
+function listarTecnicos()
 {
+    global $pdo;
 
+    // Query para buscar os técnicos
+    $sql = "SELECT * FROM tecnico";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    // Retorna todos os dados dos técnicos
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function cancelarContaTec()
+function criarTecnico()
 {
+    global $pdo;
+    // Encriptar a senha antes de salvar no banco
+    $senhaHash = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
+    $stmt = $pdo->prepare("INSERT INTO tecnico (Nome, Email, CPF, Telefone, UsuarioTec, Senha) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->execute([
+        $_POST['nome'],
+        $_POST['email'],
+        $_POST['cpf'],
+        $_POST['telefone'],
+        $_POST['usuario'],
+        $senhaHash // Usando a senha criptografada
+    ]);
+    header("Location: ../view/criar-tecnico.php");
+    exit();
 }
 
-function voltarViewTec()
+function confirmarEdicaoTecnico()
 {
+    global $pdo;
+    // Se a senha foi alterada, encripte-a
+    $senhaHash = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
+    $stmt = $pdo->prepare("UPDATE tecnico SET Nome=?, Email=?, CPF=?, Telefone=?, UsuarioTec=?, Senha=? WHERE IDTecnico=?");
+    $stmt->execute([
+        $_POST['nome'],
+        $_POST['email'],
+        $_POST['cpf'],
+        $_POST['telefone'],
+        $_POST['usuario'],
+        $senhaHash, // Usando a senha criptografada
+        $_POST['id_tecnico']
+    ]);
+    unset($_SESSION['modo'], $_SESSION['tecnico_em_edicao']);
+    header("Location: ../view/criar-tecnico.php");
+    exit();
+}
+
+function cancelarTecnico()
+{
+    unset($_SESSION['tecnico_em_edicao'], $_SESSION['modo']);
+    header("Location: ../view/criar-tecnico.php");
+    exit();
+}
+
+function voltarPaginaTecnico()
+{
+    $tipoUsuario = $_SESSION['tipo'] ?? '';
+    if ($tipoUsuario === 'admin') {
+        header("Location: ../view/area-administrador.php");
+    } elseif ($tipoUsuario === 'tecnico') {
+        header("Location: ../view/page-tecnico.php");
+    } else {
+        header("Location: ../view/area-funcionario.php");
+    }
+    exit();
 }
 
 function gerarTabelaOrdensServico()
@@ -25,7 +104,7 @@ function gerarTabelaOrdensServico()
     require '../DAO/conexao.php';
 
     $stmt = $pdo->query("
-        SELECT 
+        SELECT
             p.IDOs,
             p.Condicao,
             p.Descricao,
@@ -78,6 +157,5 @@ function gerarTabelaOrdensServico()
 
     return $html;
 }
-
 
 ?>
