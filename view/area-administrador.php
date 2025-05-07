@@ -32,9 +32,16 @@ $clientes = listarClientes();
             <div id="myDropdown" class="dropdown-content">
                 <a href="criar-tecnico.php">Gerenciar Técnicos</a>
                 <a href="gerenciar-os.php">Gerenciar Ordens de Serviço</a>
-                <a href="#">Criar Relatórios</a>
+
+                <div class="dropdown-relatorio">
+                    <a href="#" onclick="toggleSubmenu(event)">Criar Relatórios ▸</a>
+                    <div class="submenu-relatorio" id="submenuRelatorio">
+                        <a href="relatorioProcessa.php?tipo=os">Ordens de Serviço</a>
+                        <a href="relatorioProcessa.php?tipo=clientes">Clientes</a>
+                        <a href="relatorioProcessa.php?tipo=tecnicos">Técnicos</a>
+                    </div>
+                </div>
             </div>
-        </div>
         </div>
         <h2 id="h2-center">
             <p> Administração </p>
