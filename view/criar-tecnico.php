@@ -1,10 +1,10 @@
 <?php
 session_start();
 require '../DAO/conexao.php';
+require '../controller/loginadmtecProcessa.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: area-funcionario.php');
-    exit();
+    sairTecAd();
 }
 
 $tecnicoEmEdicao = $_SESSION['tecnico_em_edicao'] ?? null;

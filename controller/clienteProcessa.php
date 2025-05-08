@@ -116,6 +116,8 @@ function entrarCliente()
         if ($user && password_verify($password, $user['Senha'])) {
             $_SESSION['user_id'] = $user['IDUsuario'];
             $_SESSION['username'] = $user['UsuarioCliente'];
+            $_SESSION['tipo'] = 'cliente';
+
             header('Location: page-cliente.php');
             exit();
         } else {

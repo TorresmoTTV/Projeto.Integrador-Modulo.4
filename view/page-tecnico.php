@@ -5,8 +5,7 @@ require '../controller/loginadmtecProcessa.php';
 require '../controller/tecnicoProcessa.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'tecnico') {
-    header('Location: area-funcionario.php');
-    exit();
+    sairTecAd();
 }
 
 ?>

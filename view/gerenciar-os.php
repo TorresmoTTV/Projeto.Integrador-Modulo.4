@@ -1,10 +1,11 @@
 <?php
 session_start();
 require '../DAO/conexao.php';
+require '../controller/loginadmtecProcessa.php';
+require '../controller/clienteProcessa.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: area-funcionario.php');
-    exit();
+if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] == 'cliente') {
+    sairCliente();
 }
 
 $osEmEdicao = $_SESSION['os_em_edicao'] ?? null;

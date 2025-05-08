@@ -2,10 +2,10 @@
 session_start();
 require '../DAO/conexao.php';
 require '../controller/administradorProcessa.php';
+require '../controller/loginadmtecProcessa.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'admin') {
-    header('Location: area-funcionario.php');
-    exit();
+    sairTecAd();
 }
 
 $ordens = listarOS();
@@ -19,9 +19,9 @@ $clientes = listarClientes();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/btn-adm.css">
     <link rel="stylesheet" href="../styles/stylecriarcli.css">
     <link rel="stylesheet" href="../styles/style-adm.css">
-    <link rel="stylesheet" href="../styles/btn-adm.css">
     <title>Área do Administrador</title>
 </head>
 
@@ -32,13 +32,12 @@ $clientes = listarClientes();
             <div id="myDropdown" class="dropdown-content">
                 <a href="criar-tecnico.php">Gerenciar Técnicos</a>
                 <a href="gerenciar-os.php">Gerenciar Ordens de Serviço</a>
-
                 <div class="dropdown-relatorio">
                     <a href="#" onclick="toggleSubmenu(event)">Criar Relatórios ▸</a>
-                    <div class="submenu-relatorio" id="submenuRelatorio">
-                        <a href="relatorioProcessa.php?tipo=os">Ordens de Serviço</a>
-                        <a href="relatorioProcessa.php?tipo=clientes">Clientes</a>
-                        <a href="relatorioProcessa.php?tipo=tecnicos">Técnicos</a>
+                    <div id="submenuRelatorio" class="submenu-relatorio">
+                        <a href="../controller/relatorioProcessa.php?tipo=clientes"  target="_blank">Gerar PDF Clientes</a>
+                        <a href="../controller/relatorioProcessa.php?tipo=tecnicos"  target="_blank">Gerar PDF Técnicos</a>
+                        <a href="../controller/relatorioProcessa.php?tipo=os"  target="_blank">Gerar PDF O.S.</a>
                     </div>
                 </div>
             </div>
@@ -48,7 +47,6 @@ $clientes = listarClientes();
         </h2>
         <div>
             <?php
-            require '../controller/loginadmtecProcessa.php';
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
                 sairTecAd();
             }
@@ -60,8 +58,8 @@ $clientes = listarClientes();
     </header>
     <main>
         <div class="container-centralizado">
+            <h2 id="h2-center">Ordens de Serviço</h2>
             <div class="table-scroll-container">
-                <h2 id="h2-center">Ordens de Serviço</h2>
                 <br>
                 <table class="tabela-adm">
                     <thead>
@@ -98,8 +96,8 @@ $clientes = listarClientes();
                     </tbody>
                 </table>
             </div>
+            <h2 id="h2-center">Tabela de Técnicos</h2>
             <div class="table-scroll-container">
-                <h2 id="h2-center">Tabela de Técnicos</h2>
                 <br>
                 <table class="tabela-adm">
                     <thead>
@@ -126,8 +124,8 @@ $clientes = listarClientes();
                     </tbody>
                 </table>
             </div>
+            <h2 id="h2-center">Tabela de Clientes</h2>
             <div class="table-scroll-container">
-                <h2 id="h2-center">Tabela de Clientes</h2>
                 <br>
                 <table class="tabela-adm">
                     <thead>
@@ -135,6 +133,7 @@ $clientes = listarClientes();
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Email</th>
+                            <th>Endereco</th>
                             <th>Telefone</th>
                             <th>CPF</th>
                             <th>Usuário</th>
@@ -146,6 +145,7 @@ $clientes = listarClientes();
                                 <td><?= htmlspecialchars($cliente['IDUsuario']) ?></td>
                                 <td><?= htmlspecialchars($cliente['Nome']) ?></td>
                                 <td><?= htmlspecialchars($cliente['Email']) ?></td>
+                                <td><?= htmlspecialchars($cliente['Endereco']) ?></td>
                                 <td><?= htmlspecialchars($cliente['Telefone']) ?></td>
                                 <td><?= htmlspecialchars($cliente['CPF']) ?></td>
                                 <td><?= htmlspecialchars($cliente['UsuarioCliente']) ?></td>

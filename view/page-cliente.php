@@ -4,9 +4,8 @@ require '../controller/clienteProcessa.php';
 require '../DAO/conexao.php';
 
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: area-cliente.php');
-    exit();
+if (!isset($_SESSION['user_id'])|| $_SESSION['tipo'] !== 'cliente') {
+    sairCliente();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {

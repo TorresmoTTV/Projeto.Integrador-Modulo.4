@@ -4,9 +4,8 @@ session_start();
 require '../DAO/conexao.php';
 require '../controller/clienteProcessa.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: area-cliente.php');
-    exit();
+if (!isset($_SESSION['user_id'])|| $_SESSION['tipo'] !== 'cliente') {
+    sairCliente();
 }
 
 $usuario = buscarClientePorId($pdo, $_SESSION['user_id']);
