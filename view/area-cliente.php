@@ -29,9 +29,6 @@ session_start();
             entrarCliente();
         }
         ?>
-        <?php if (isset($error)): ?>
-            <p style="color:red;"><?php echo $error; ?></p>
-        <?php endif; ?>
         <div id="form-container-wrapper">
             <form method="POST">
                 <div id="form-container-login">

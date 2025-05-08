@@ -13,22 +13,31 @@ function criarConta()
         $username = $_POST['usuario'];
         $password = $_POST['senha'];
 
-        $stmt = $pdo->prepare("SELECT * FROM cliente WHERE UsuarioCliente = ?");
-        $stmt->execute([$username]);
+        // Verifica se o nome de usuário já existe em cliente, tecnico ou administrador
+        $stmt = $pdo->prepare("
+            SELECT 'cliente' AS origem FROM cliente WHERE UsuarioCliente = ?
+            UNION
+            SELECT 'tecnico' FROM tecnico WHERE UsuarioTec = ?
+            UNION
+            SELECT 'admin' FROM administrador WHERE UsuarioAdmin = ?
+        ");
+        $stmt->execute([$username, $username, $username]);
+
         if ($stmt->fetch()) {
-            $error = 'Nome do usuário já existe.';
+            echo "<script>alert('Nome de usuário já está em uso. Escolha outro.');</script>";
         } else {
             $hashed_password = password_hash($password, PASSWORD_BCRYPT);
             $stmt = $pdo->prepare('INSERT INTO cliente (Nome, Email, Endereco, CPF, Telefone, UsuarioCliente, Senha) VALUES (?, ?, ?, ?, ?, ?, ?)');
             if ($stmt->execute([$nome, $email, $endereco, $cpf, $telefone, $username, $hashed_password])) {
-                $sucess = 'Usuário registrado com sucesso. Você pode fazer login agora.';
                 header('Location: ../view/page-cliente.php');
+                exit();
             } else {
-                $error = "Erro ao registrar usuário. Tente novamente.";
+                echo "<script>alert('Erro ao registrar usuário. Tente novamente.');</script>";
             }
         }
     }
 }
+
 //excluir conta cliente
 function excluirConta()
 {
@@ -42,16 +51,23 @@ function excluirConta()
 
     $idUsuario = $_SESSION['user_id'];
 
-    // Exclui o usuário da tabela cliente
-    $stmt = $pdo->prepare("DELETE FROM cliente WHERE IDUsuario = ?");
-    if ($stmt->execute([$idUsuario])) {
-        // Encerra a sessão e redireciona
-        session_unset();
-        session_destroy();
-        header('Location: ../view/area-cliente.php');
-        exit();
-    } else {
-        echo "<script>alert('Erro ao excluir a conta. Tente novamente.');</script>";
+    try {
+        // Exclui primeiro os projetos relacionados ao cliente
+        $stmtProjetos = $pdo->prepare("DELETE FROM Projeto_OrdemdeServico WHERE fk_Cliente_IDUsuario = ?");
+        $stmtProjetos->execute([$idUsuario]);
+
+        // Depois exclui o cliente
+        $stmtCliente = $pdo->prepare("DELETE FROM cliente WHERE IDUsuario = ?");
+        if ($stmtCliente->execute([$idUsuario])) {
+            session_unset();
+            session_destroy();
+            header('Location: ../view/area-cliente.php');
+            exit();
+        } else {
+            echo "<script>alert('Erro ao excluir a conta. Tente novamente.');</script>";
+        }
+    } catch (PDOException $e) {
+        echo "<script>alert('Erro ao excluir dados: " . $e->getMessage() . "');</script>";
     }
 }
 
@@ -121,7 +137,7 @@ function entrarCliente()
             header('Location: page-cliente.php');
             exit();
         } else {
-            $error = 'Nome de usuário ou senha inválidos';
+            echo "<script>alert('Nome de usuário ou senha inválidos'); window.location.href='area-cliente.php';</script>";
         }
     }
 }

@@ -105,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return true;
         }
     </script>
-    <script src="../scripts/script.js"></script>
 </body>
 
 </html>

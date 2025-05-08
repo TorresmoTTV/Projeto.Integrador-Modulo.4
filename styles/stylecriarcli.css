@@ -139,6 +139,18 @@ button:hover {
     background-color: red;
 }
 
+.mensagem-erro {
+    margin: 10px auto;
+    padding: 12px;
+    background-color: #ffcccc;
+    border: 1px solid #cc0000;
+    color: #990000;
+    width: 60%;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
 @media only screen and (max-width: 720px) {
     #footer-info {
         background-color: #8b3908;
