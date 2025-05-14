@@ -34,7 +34,7 @@ if ($_GET['acao'] ?? '' === 'cancelar') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/style-os.css">
-    <link rel="stylesheet" href="../styles/stylecriarcli.css">
+    <link rel="stylesheet" href="../styles/style.css">
     <title>Gerenciar Ordens de Serviço</title>
 </head>
 

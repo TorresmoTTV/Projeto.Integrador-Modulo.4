@@ -17,7 +17,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['tipo'] !== 'tecnico') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/style-tecpage.css">
-    <link rel="stylesheet" href="../styles/stylecriarcli.css">
+    <link rel="stylesheet" href="../styles/style.css">
     <title>Projeto/Ordens de Serviço - Técnico</title>
 </head>
 
